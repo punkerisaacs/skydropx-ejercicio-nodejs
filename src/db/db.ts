@@ -18,7 +18,7 @@ export default class DB {
         const _options = DB_OPTIONS ? `?${DB_OPTIONS}` : '';
 
         this.dbURI = `${_protocol}://${DB_HOST}${_port}/${DB_DATABASE}${_options}`;
-        this.init();
+        this.init().then();
     }
 
     async init(): Promise<void> {
@@ -53,10 +53,7 @@ export default class DB {
         let connection;
         do {
             try {
-                connection = await connect(
-                    this.dbURI,
-                    options
-                );
+                connection = await connect(this.dbURI, options);
             } catch (e) {
                 console.log('error DB');
                 console.log(e);

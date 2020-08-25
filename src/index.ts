@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 import morgan from 'morgan';
-//import DB from './db/db';
+import DB from './db/db';
 import cors from 'cors';
 import Routes from './routes/Routes';
 
@@ -15,12 +15,12 @@ const ENVIRONMENT = process.env.ENVIRONMENT || 'dev';
 class Server {
     public app: Application;
 
-    //public db: DB;
+    public db: DB;
 
     constructor() {
         this.app = express();
         this.config().then();
-        //this.connectDB();
+        this.connectDB();
         this.routes();
     }
 
@@ -33,7 +33,7 @@ class Server {
     }
 
     connectDB(): void {
-        //this.db = new DB();
+        this.db = new DB();
     }
 
     routes(): void {
