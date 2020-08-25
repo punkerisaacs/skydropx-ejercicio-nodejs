@@ -1,5 +1,17 @@
 import { Request, Response } from 'express';
+import mongoose from 'mongoose';
+
 import { User, UserModel } from '../models/User';
+
+function validate(id) {
+    let valid = false;
+    try {
+        if (id == new mongoose.Types.ObjectId('' + id)) valid = true;
+    } catch (e) {
+        valid = false;
+    }
+    return valid;
+}
 
 class UsersController {
     async index(req: Request, res: Response): Promise<void> {
@@ -21,11 +33,30 @@ class UsersController {
     }
 
     async find(req: Request, res: Response): Promise<void> {
-        const { userId } = req.params;
+        const { userIds } = req.body;
         try {
-            const user = await User.findById(userId);
+            const validUsers = userIds.map((id: string) => {
+                if (validate(id)) {
+                    return id;
+                }
+            });
+
+            const inValidUsers = userIds.map((id: string) => {
+                if (!validate(id)) {
+                    return id;
+                }
+            });
+
+            const users = await User.find({
+                _id: { $in: validUsers },
+            });
+
+            /*inValidUsers.map((id: string) => {
+                console.log(1);
+            });*/
+
             res.status(200).json({
-                data: { user },
+                data: { users },
                 message: 'Usuario',
                 status: 0,
             });
@@ -37,7 +68,6 @@ class UsersController {
                 error: err,
             });
 
-            //TODO buscar por Arrayg
             //TODO solicitar a api externa
         }
     }

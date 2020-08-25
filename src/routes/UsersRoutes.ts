@@ -11,7 +11,7 @@ class UsersRoutes {
     config(): void {
         const usersController = new UsersController();
         this.router.get('/', usersController.index);
-        this.router.get('/:userId', usersController.find);
+        this.router.post('/find', usersController.find);
         this.router.post('/', usersController.create);
         this.router.post('/:userId', usersController.update);
         this.router.delete('/:userId', usersController.delete);
