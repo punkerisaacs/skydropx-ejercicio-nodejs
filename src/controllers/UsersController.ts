@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { User, UserModel } from '../models/User';
 
 class UsersController {
     async index(req: Request, res: Response): Promise<void> {
