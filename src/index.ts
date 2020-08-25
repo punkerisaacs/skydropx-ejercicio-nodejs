@@ -14,7 +14,6 @@ const ENVIRONMENT = process.env.ENVIRONMENT || 'dev';
 
 class Server {
     public app: Application;
-
     public db: DB;
 
     constructor() {
@@ -25,7 +24,7 @@ class Server {
     }
 
     async config(): Promise<void> {
-        this.app.set('port', PORT);
+        this.app.set('port', PORT || 3000);
         this.app.use(morgan(ENVIRONMENT));
         this.app.use(cors());
         this.app.use(express.json());
@@ -45,6 +44,8 @@ class Server {
         this.app.listen(this.app.get('port'), () => console.log(`backend nodeJs is running in http://${HOST}:${PORT}`));
     }
 }
+
+
 
 const connect = new Server();
 connect.start();

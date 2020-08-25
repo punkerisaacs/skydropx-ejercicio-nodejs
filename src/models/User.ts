@@ -13,21 +13,27 @@ export const UserSchema = new Schema(
     {
         email: {
             type: String,
+            required: true,
         },
         first_name: {
             type: String,
+            required: true,
         },
         last_name: {
             type: String,
+            required: true,
         },
         company: {
             type: String,
+            required: true,
         },
         url: {
             type: String,
+            required: true,
         },
         text: {
             type: String,
+            required: true,
         },
     },
     {
@@ -38,4 +44,4 @@ export const UserSchema = new Schema(
     }
 );
 
-export const User = model<UserModel>('account_user_profiles', UserSchema);
+export const User = model<UserModel>('Users', UserSchema);
