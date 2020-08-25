@@ -37,6 +37,7 @@ class UsersController {
                 error: err,
             });
 
+            //TODO buscar por Arrayg
             //TODO solicitar a api externa
         }
     }
