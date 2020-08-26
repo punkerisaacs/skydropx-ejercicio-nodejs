@@ -1,15 +1,11 @@
 {
   "name": "crud-skydropx",
   "version": "1.0.0",
-  "description": "ejercicio con node y react",
+  "description": "ejemplo con node",
   "main": "index.ts",
   "scripts": {
-    "start": "node ./dist/index.js",
-    "dev": "nodemon ./dist/index.js",
-    "start:local": "nodemon ./src/index.ts",
-    "start:local_legacy": "nodemon -L ./src/index.ts",
-    "watch": "tsc -w",
-    "build": "tsc"
+    "start": "tsc & node ./dist/index.js",
+    "start:local": "nodemon ./src/index.ts"
   },
   "author": "punkerisaacs",
   "license": "ISC",

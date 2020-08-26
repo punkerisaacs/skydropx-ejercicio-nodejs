@@ -7,7 +7,7 @@ import {User, UserModel} from '../models/User';
 
 const URL = 'https://reqres.in/api/users';
 
-const validate = (id: any): boolean => {
+const validate = (id: string | number | mongoose.Types.ObjectId): boolean => {
     let valid = false;
     try {
         if (id == new mongoose.Types.ObjectId('' + id)) valid = true;
@@ -20,7 +20,7 @@ const validate = (id: any): boolean => {
 class UsersController {
     async index(req: Request, res: Response): Promise<void> {
         try {
-            const users = await User.find({});
+            const users: Array<UserModel> = await User.find({});
             res.status(200).json({
                 data: {users},
                 message: 'Usuarios',
@@ -51,7 +51,7 @@ class UsersController {
                 }
             });
 
-            const users = await User.find({
+            const users: Array<UserModel> = await User.find({
                 _id: {$in: validUsers},
             });
 
@@ -79,7 +79,7 @@ class UsersController {
                     users,
                     usersExternal,
                 },
-                message: 'Usuario',
+                message: 'Usuarios',
                 status: 0,
             });
         } catch (err) {
@@ -94,7 +94,7 @@ class UsersController {
 
     async create(req: Request, res: Response): Promise<void> {
         try {
-            const user = await User.create(req.body);
+            const user: UserModel = await User.create(req.body);
             res.status(200).json({
                 data: {user},
                 message: 'Usuario creado',
@@ -113,7 +113,7 @@ class UsersController {
     async update(req: Request, res: Response): Promise<void> {
         try {
             const {userId} = req.params;
-            const user = await User.findByIdAndUpdate({_id: userId}, req.body, {new: true});
+            const user: UserModel = await User.findByIdAndUpdate({_id: userId}, req.body, {new: true});
 
             if (!user) {
                 res.status(404).json({
@@ -142,7 +142,7 @@ class UsersController {
     async delete(req: Request, res: Response): Promise<void> {
         try {
             const {userId} = req.params;
-            const user = await User.findByIdAndDelete(userId);
+            const user: UserModel = await User.findByIdAndDelete(userId);
 
             if (!user) {
                 res.status(404).json({
