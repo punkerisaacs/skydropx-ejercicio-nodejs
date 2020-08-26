@@ -1,6 +1,6 @@
-import { Document, model, Schema } from 'mongoose';
+import { Document, model, Schema, SchemaTimestampsConfig } from 'mongoose';
 
-export interface UserModel extends Document {
+export interface UserModel extends SchemaTimestampsConfig {
     email: string;
     first_name: string;
     last_name: string;
@@ -8,6 +8,8 @@ export interface UserModel extends Document {
     url: string;
     text: string;
 }
+
+export interface UserDocument extends UserModel, Document {}
 
 export const UserSchema = new Schema(
     {
@@ -39,9 +41,13 @@ export const UserSchema = new Schema(
     {
         timestamps: true, // optional
         toJSON: {
-            virtuals: true,
+            transform: (doc: UserDocument, ret: UserModel): UserModel => {
+                delete ret.createdAt;
+                delete ret.updatedAt;
+                return ret;
+            },
         },
     }
 );
 
-export const User = model<UserModel>('Users', UserSchema);
+export const User = model<UserDocument>('Users', UserSchema);
